@@ -21,9 +21,9 @@ endif()
 
 
 # project config ################################
-project (AUDIO_APP VERSION 0.0.1)
+project (jsfz VERSION 0.0.1)
 set     (Target      ${PROJECT_NAME})
-set     (ProductName "Audio App")
+set     (ProductName "jsfz - juce based sfz engine")
 
 set (companyName "noizplay")
 set (companyURL "noizplay.com")
