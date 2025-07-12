@@ -9,6 +9,9 @@
 #include "../common/cmake_var.h"
 #include "../common/config.h"
 
+#include "../process/Sequencer.h"
+#include "../process/Parser.h"
+
 namespace jsfz {
 
 class MainComponent final
@@ -49,6 +52,12 @@ public:
                  // Specify the number of input and output channels that we want to open
                  setAudioChannels (2, 2);
              }
+
+        const auto file {File{"/Users/martinstolz/Desktop/F.sfz"}};
+        const auto sfzContent = file.loadFileAsString();
+        DBG("SFZ Content:\n" + sfzContent);
+        DBG("parser ends with " << val(_parser.process(sfzContent.toWideCharPointer())));
+
     }
 
     ~MainComponent() override {
@@ -96,7 +105,8 @@ public:
 
 private:
 
-    void loadSfzFile() const {
+    void loadSfzFile() {
+        /*
         _fileChooser->launchAsync(
             FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles,
             [this](const FileChooser& chooser) {
@@ -105,13 +115,18 @@ private:
                     DBG("SFZ File loaded: " + file.getFileName());
                     DBG("Content length: " + String(sfzContent.length()) + " chars");
                     DBG("SFZ Content:\n" + sfzContent);
+                    _parser.process(sfzContent.toWideCharPointer());
                 }
             }
         );
+        */
     }
 
     TextButton                   _loadSfzButton;
     std::unique_ptr<FileChooser> _fileChooser;
+
+    Sequencer _sequencer{};
+    Parser    _parser{_sequencer};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR( MainComponent )
 };
