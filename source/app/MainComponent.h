@@ -6,10 +6,10 @@
 
 #include <JuceHeader.h>
 
-#include "../common/cmakeVar.h"
-#include "../common/appConfig.h"
+#include "../common/cmake_var.h"
+#include "../common/config.h"
 
-namespace aa {
+namespace jsfz {
 
 class MainComponent final
     : public AudioAppComponent {
@@ -44,10 +44,10 @@ public:
     }
 
     void paint(Graphics& g) override {
-        g.setColour(app_config::MAIN_COLOUR);
+        g.setColour(config::mainColour);
         g.setFont (FontOptions().withStyle ("light"));
         g.drawFittedText(
-                cmakeVar::companyURL,
+                cmake_var::companyURL,
                 getLocalBounds(),
                 Justification::centredBottom,
                 1);

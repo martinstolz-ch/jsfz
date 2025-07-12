@@ -8,7 +8,7 @@
 
 #include "MainComponent.h"
 
-namespace aa {
+namespace jsfz {
 
 constexpr bool isMobile() {
 #if JUCE_IOS || JUCE_ANDROID

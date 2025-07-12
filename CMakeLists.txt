@@ -120,4 +120,4 @@ target_compile_definitions ("${Target}"
 target_include_directories(${Target} PRIVATE "${CMAKE_BINARY_DIR}/source/common")
 get_target_property (COMPANY_WEBSITE ${Target} JUCE_COMPANY_WEBSITE)
 string (TIMESTAMP buildYear "%Y")
-configure_file (template/cmakeVar.h.tpl "source/common/cmakeVar.h" )
+configure_file (template/cmake_var.h.tpl "source/common/cmake_var.h" )

@@ -6,7 +6,7 @@
 
 #include "MainWindow.h"
 
-namespace aa {
+namespace jsfz {
 
 class AudioApp final
     : public JUCEApplication {
@@ -40,4 +40,4 @@ private:
 
 }
 
-START_JUCE_APPLICATION( aa::AudioApp )
+START_JUCE_APPLICATION( jsfz::AudioApp )
