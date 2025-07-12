@@ -17,7 +17,19 @@ class MainComponent final
 public:
     MainComponent() {
 
-        setSize(400, 200);
+        setSize(400, 300);
+
+        // Button setup
+        _loadSfzButton.setButtonText("Load SFZ");
+        _loadSfzButton.onClick = [this] { loadSfzFile(); };
+        addAndMakeVisible(_loadSfzButton);
+
+        // File chooser setup
+        _fileChooser = std::make_unique<FileChooser>(
+            "Select SFZ file",
+            File::getSpecialLocation(File::userMusicDirectory),
+            "*.sfz"
+        );
 
         ///
 
@@ -53,7 +65,12 @@ public:
                 1);
     }
 
-    void resized() override {}
+    void resized() override {
+        auto bounds = getLocalBounds();
+        bounds.reduce(20, 20);
+
+        _loadSfzButton.setBounds(bounds.removeFromTop(40));
+    }
 
     /**
      * Prepares the audio processor for play by setting up the necessary sample rate, block size,
@@ -78,6 +95,23 @@ public:
     }
 
 private:
+
+    void loadSfzFile() const {
+        _fileChooser->launchAsync(
+            FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles,
+            [this](const FileChooser& chooser) {
+                if (const auto file = chooser.getResult(); file.existsAsFile()) {
+                    const auto sfzContent = file.loadFileAsString();
+                    DBG("SFZ File loaded: " + file.getFileName());
+                    DBG("Content length: " + String(sfzContent.length()) + " chars");
+                    DBG("SFZ Content:\n" + sfzContent);
+                }
+            }
+        );
+    }
+
+    TextButton                   _loadSfzButton;
+    std::unique_ptr<FileChooser> _fileChooser;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR( MainComponent )
 };
